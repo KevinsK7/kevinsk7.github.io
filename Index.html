@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora de la Doctora Alicia Scott</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace; /* Cambia esta línea según tus preferencias */
+        }
+        .lcd-title {
+            font-size: 2em;
+            color: #0f0;
+            text-shadow: 0 0 5px #00ff00;
+            border: 2px solid #0f0;
+            padding: 10px;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .note {
+            font-size: 1.2em;
+            margin: 10px 0;
+            opacity: 0;
+            animation: revealText 3s forwards;
+        }
+        @keyframes revealText {
+            0% {
+                opacity: 0;
+                content: '_';
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            color: #0f0;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .content {
+            display: none;
+            margin-top: 20px;
+        }
+        .content.active {
+            display: block;
+        }
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-box {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            background-color: #000;
+            color: #0f0;
+            border: 2px solid #0f0;
+            outline: none;
+        }
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            color: #0f0;
+            font-size: 1.2em;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="lcd-title">Bitácora de la Doctora Alicia Scott</div>
+    <div class="">Pistas y notas importantes...</div>
+    <div class="search-container">
+        <input type="text" class="search-box" id="search-box" placeholder="Buscar...">
+        <span class="search-icon"></span>
+    </div>
+
+    <nav id="menu">
+        <!-- Los enlaces se generarán dinámicamente -->
+    </nav>
+
+    <div id="content-container">
+        <!-- El contenido se generará dinámicamente -->
+    </div>
+
+    <script>
+        const data = {
+            'wester': {
+                title: 'Prisión Wester',
+                notes: [
+
+"Prisión Wester", 
+"Fundación", 
+
+"La Prisión Wester fue fundada en 1965, inicialmente como una instalación de máxima seguridad destinada a albergar a los criminales más peligrosos del estado. Con el tiempo, se convirtió en un lugar donde las fronteras entre la justicia y la ciencia comenzaron a desdibujarse." , 
+
+"Secretos Oscuros",
+
+"Desde su fundación, la Prisión Wester ha sido el epicentro de numerosos rumores y escándalos. En la década de 1990, surgieron acusaciones de experimentos ilegales realizados en los prisioneros. Estos experimentos eran dirigidos por la Corporación Neura, una entidad que operaba bajo el pretexto de desarrollar nuevas técnicas de rehabilitación psicológica. Sin embargo, las verdaderas intenciones eran mucho más siniestras.",
+
+"Desapariciones",
+
+"A lo largo de los años, al menos 50 prisioneros han desaparecido sin dejar rastro. Los registros oficiales sugieren transferencias a otras instalaciones o muertes accidentales, pero los rumores hablan de experimentos que fueron mal y resultaron en desapariciones forzadas para encubrir los fracasos. Los prisioneros desaparecidos a menudo eran seleccionados por sus antecedentes psiquiátricos, haciéndolos sujetos ideales para los experimentos de Neura."
+
+]
+            },
+            'Corporación Neura': {
+                title: 'Corporación Neura',
+                notes: ["Información sobre Corporación Neura", "La Corporación Neura fue establecida en 1985, inicialmente como una empresa de investigación en neurociencia. Con el tiempo, su enfoque se expandió hacia el desarrollo de tecnologías avanzadas para la manipulación y lectura de procesos cerebrales. Su lema es 'Explorando la Mente para un Futuro Mejor', pero la realidad detrás de sus operaciones es mucho más oscura.", "Conexiones con la Prisión Wester","Neura ha mantenido una relación simbiótica con la Prisión Wester durante décadas. Utilizan a los prisioneros como sujetos de prueba para sus experimentos más controvertidos. Estos incluyen intentos de leer y alterar pensamientos, inducir sueños controlados y manipular emociones. Los resultados de estos experimentos han sido mixtos, con muchos fracasos que nunca vieron la luz pública."]
+            },
+            'Nick Ashford': {
+                title: 'Nick Ashford',
+                notes: ["Información sobre Nick Ashford", "Nick Ashford fue uno de los sujetos más prominentes en los experimentos de Neura. A diferencia de muchos prisioneros, Nick fue seleccionado no por sus antecedentes criminales (no se sabe sobre sus antecedentes, se rumorea qué fue incriminado injustamente por Neura), sino por su excepcional resistencia mental y capacidad de recuperación emocional. A través de los experimentos, Nick desarrolló la habilidad de entrar en el 'mundo del alma', un plano mental donde puede interactuar con las psiques de otros.","Historia Personal","Antes de ser seleccionado por Neura, Nick era un joven brillante con un futuro prometedor en la psicología y ciencia de la computación Neurocuantica. Su participación en los experimentos de Neura comenzó cuando aceptó un puesto de investigación que rápidamente se convirtió en una pesadilla. Las pruebas constantes y la manipulación mental lo dejaron con cicatrices profundas, pero también con una fuerza interior que le permite luchar contra las oscuridades del alma."]
+            },
+            'Sarah Morgan': {
+                title: 'Sarah Morgan',
+                notes: ["Sobre Sarah Morgan","Sarah Morgan es la asistente de la Doctora Alicia Scott y una pieza clave en la investigación del mundo del alma. Con una formación en neurociencia y psicología, Sarah es tanto la mano derecha de la doctora como su confidente más cercana.", "Historia Personal","Sarah se unió a Neura con la esperanza de realizar investigaciones significativas en el campo de la neurociencia. Sin embargo, rápidamente se dio cuenta de las prácticas éticamente cuestionables de la corporación. Su lealtad a la Doctora Scott y su deseo de hacer el bien la mantienen firme en su posición, trabajando desde dentro para hacer una diferencia."]
+            },
+            'Doctora Alicia Scott': {
+                title: 'Doctora Alicia Scott',
+                notes: ["Información Clave",
+
+"La Doctora Alicia Scott es una psicóloga reconocida y la principal investigadora en el proyecto del mundo del alma. Con una dedicación inquebrantable a su trabajo, ha logrado avances significativos en la comprensión de los procesos mentales y emocionales." ,
+
+"Diario Personal",
+"Fecha 12 de marzo de 2022",
+"Hoy he vuelto a revisar los registros de los pacientes de Wester. Cada archivo, cada historia es una pieza de un rompecabezas más grande. No puedo evitar sentir una profunda conexión con ellos, especialmente con Nick. Su capacidad para navegar en el mundo del alma es fascinante y perturbadora a la vez. Cada día me pregunto si estamos haciendo lo correcto, si realmente estamos ayudando a estas personas o si simplemente estamos jugando a ser dioses.",
+"Fecha 25 de abril de 2022",
+"Sarah es un apoyo inestimable. Su inteligencia y su moralidad la hacen única en un lugar como Neura. A veces, me pregunto cómo hemos llegado hasta aquí, en este lugar donde la ética es una moneda de cambio. Me reconforta saber que no estoy sola en esta lucha por descubrir la verdad y usar nuestros conocimientos para el bien.",
+"Fecha 15 de junio de 2022",
+"Hoy, otro prisionero ha desaparecido. Los informes oficiales son vagos y contradictorios. La oscuridad que envuelve a la Prisión Wester se vuelve cada vez más densa. Tengo que mantenerme fuerte, por Nick, por Sarah, por todos los que no pueden luchar por sí mismos. La verdad debe salir a la luz, cueste lo que cueste."]
+            }
+            // Puedes añadir más entradas aquí
+        };
+
+        function typeEffect(element, text, delay) {
+            let i = 0;
+            function randomLetter() {
+                return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+            }
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text[i];
+                    i++;
+                    setTimeout(type, delay);
+                } else {
+                    element.innerHTML = text;
+                }
+            }
+            let j = 0;
+            function randomType() {
+                if (j < text.length) {
+                    element.innerHTML += randomLetter();
+                    j++;
+                    setTimeout(randomType, delay);
+                } else {
+                    element.innerHTML = '';
+                    setTimeout(type, 0);
+                }
+            }
+            randomType();
+        }
+
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const contentElement = document.getElementById(contentId);
+            contentElement.classList.add('active');
+            
+            // Limpiar el contenido existente
+            contentElement.innerHTML = '';
+
+            const notes = data[contentId].notes;
+            notes.forEach((note, index) => {
+                const noteElement = document.createElement('div');
+                noteElement.classList.add('note');
+                noteElement.id = `${contentId}-note${index + 1}`;
+                contentElement.appendChild(noteElement);
+
+                typeEffect(noteElement, note, 15);
+            });
+        }
+
+        function generateMenu() {
+            const menu = document.getElementById('menu');
+            for (let key in data) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.innerText = data[key].title;
+                link.onclick = function() {
+                    showContent(key);
+                };
+                menu.appendChild(link);
+            }
+        }
+
+        function generateContent() {
+            const contentContainer = document.getElementById('content-container');
+            for (let key in data) {
+                const contentDiv = document.createElement('div');
+                contentDiv.id = key;
+                contentDiv.classList.add('content');
+                contentContainer.appendChild(contentDiv);
+            }
+        }
+
+        function filterMenu() {
+            const searchBox = document.getElementById('search-box');
+            const filter = searchBox.value.toLowerCase();
+            const links = document.querySelectorAll('nav a');
+            links.forEach(link => {
+                if (link.innerText.toLowerCase().includes(filter)) {
+                    link.style.display = '';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        }
+
+        window.onload = function() {
+            generateMenu();
+            generateContent();
+            showContent('wester');  // Mostrar el contenido de 'wester' al cargar la página
+        };
+
+        document.getElementById('search-box').addEventListener('input', filterMenu);
+    </script>
+</body>
+</html>
+
